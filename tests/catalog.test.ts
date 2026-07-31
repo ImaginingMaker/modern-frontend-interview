@@ -4,7 +4,7 @@ import { chapters, createSidebar } from '../content/catalog'
 describe('章节目录', () => {
   it('包含顺序稳定的 18 章', () => {
     expect(chapters).toHaveLength(18)
-    expect(chapters.reduce((total, chapter) => total + chapter.topics.length, 0)).toBe(78)
+    expect(chapters.reduce((total, chapter) => total + chapter.topics.length, 0)).toBe(82)
     expect(chapters.map((chapter) => chapter.id)).toEqual(
       Array.from({ length: 18 }, (_, index) => String(index + 1).padStart(2, '0'))
     )

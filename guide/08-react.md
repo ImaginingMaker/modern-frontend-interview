@@ -17,9 +17,10 @@ updatedAt: 2026-07-31
 
 1. [React 状态与 Hooks 的心智模型是什么？](#react-render)
 2. [并发渲染和 Actions 解决什么？](#react-concurrency)
-3. [Server Components 与 React 19.2 如何理解？](#react-server)
-4. [RSC 安全事件给前端什么启示？](#rsc-security)
-5. [React 列表输入卡顿如何诊断？](#react-performance-debug)
+3. [Fiber 如何划分 render 与 commit？](#fiber-pipeline)
+4. [Server Components 与 React 19.2 如何理解？](#react-server)
+5. [RSC 安全事件给前端什么启示？](#rsc-security)
+6. [React 列表输入卡顿如何诊断？](#react-performance-debug)
 
 ## React 状态与 Hooks 的心智模型是什么？ {#react-render}
 
@@ -47,6 +48,22 @@ Effect 用于与外部系统同步，不应用来计算可由 props/state 推导
 **一句话结论：** 并发允许 React 中断和重新开始非紧急渲染，不是多线程；Transition 区分更新优先级，Actions 简化异步变更的 pending、错误和乐观状态。
 
 `useTransition` 不会让昂贵计算本身更快，而是让紧急输入保持可响应。`useOptimistic` 需设计服务端失败回滚和请求竞争。优化先看 Profiler，避免无证据地铺满 `memo`/`useMemo`。
+
+## Fiber 如何划分 render 与 commit？ {#fiber-pipeline}
+
+<InterviewMeta :difficulty="5" frequency="极高" levels="中级 / 高级" verified="2026-07-31" />
+
+**一句话结论：** Fiber 把组件工作表示为可遍历的节点，并把更新分成可被重做的 render 与同步提交的 commit；并发能力来自调度和可恢复工作，不是 Fiber 节点本身“开启了多线程”。
+
+render 阶段根据优先级处理更新，执行组件并协调子节点，构造 work-in-progress 树和变更标记。它不应产生对外可见副作用，因为工作可能暂停、放弃或重新执行。`child`、`sibling`、`return` 让 React 用显式工作循环遍历树，`alternate` 关联当前树和工作树；这些是理解机制的模型，不应把某一版本源码字段背成稳定公共 API。
+
+commit 阶段把已经完成的结果应用到宿主环境，处理 DOM 变更、ref 与 layout effect。该阶段必须保持一致性，不能把一半 DOM 更新暴露给用户，因此相对短且同步。passive effect 通常在提交后另行调度。
+
+::: warning 易错点
+“render 可中断”不代表所有更新都会中断，也不代表一次组件函数调用能从中间续跑。React 在 Fiber 工作单元边界让出，并可能重新执行组件；render 中发请求、改 DOM 或写全局变量会因此产生重复副作用。
+:::
+
+**常见追问：** Lane 是什么？它用位集合表达一组更新优先级和依赖关系，支持合并、选择与过期判断；面试重点是解释“多个更新如何被分组和抢占”，不必默写内部常量。
 
 ## Server Components 与 React 19.2 如何理解？ {#react-server}
 
@@ -88,6 +105,7 @@ React 官方披露 CVE-2025-55182：攻击者可构造发送到 Server Function 
 ## 权威来源 {#sources}
 
 - [React Documentation](https://react.dev/learn)（核验：2026-07-31）
+- [React Reconciler source](https://github.com/facebook/react/tree/main/packages/react-reconciler)（核验：2026-07-31）
 - [React 19.2](https://react.dev/blog/2025/10/01/react-19-2)（核验：2026-07-31）
 - [React Server Components](https://react.dev/reference/rsc/server-components)（核验：2026-07-31）
 - [React: Critical Security Vulnerability in React Server Components](https://react.dev/blog/2025/12/03/critical-security-vulnerability-in-react-server-components)（核验：2026-07-31）

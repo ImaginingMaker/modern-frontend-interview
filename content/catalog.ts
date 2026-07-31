@@ -45,7 +45,7 @@ export const chapters: Chapter[] = [
     { id: 'http-evolution', title: 'HTTP/1.1、HTTP/2 与 HTTP/3' }, { id: 'cache-cdn', title: '缓存与 CDN' }, { id: 'realtime', title: 'WebSocket、SSE 与流式传输' }, { id: 'cdn-cache-failure', title: 'CDN 缓存事故排查' }
   ]},
   { id: '08', route: '/guide/08-react', title: 'React 19.x、并发与服务端组件', shortTitle: 'React', difficulty: 5, frequency: '极高', levels: allLevels, tags: ['React', 'Hooks', 'RSC'], updatedAt: '2026-07-31', topics: [
-    { id: 'react-render', title: '渲染、状态与 Hooks' }, { id: 'react-concurrency', title: '并发、Actions 与性能' }, { id: 'react-server', title: 'Server Components 与 React 19.2' }, { id: 'rsc-security', title: 'RSC 安全与补丁治理' }, { id: 'react-performance-debug', title: 'React 性能诊断' }
+    { id: 'react-render', title: '渲染、状态与 Hooks' }, { id: 'react-concurrency', title: '并发、Actions 与性能' }, { id: 'fiber-pipeline', title: 'Fiber 与 render/commit 边界' }, { id: 'react-server', title: 'Server Components 与 React 19.2' }, { id: 'rsc-security', title: 'RSC 安全与补丁治理' }, { id: 'react-performance-debug', title: 'React 性能诊断' }
   ]},
   { id: '09', route: '/guide/09-vue', title: 'Vue 3、响应式与编译优化', shortTitle: 'Vue', difficulty: 5, frequency: '极高', levels: allLevels, tags: ['Vue', 'Reactivity', 'Compiler'], updatedAt: '2026-07-31', topics: [
     { id: 'vue-reactivity', title: '响应式系统' }, { id: 'vue-render', title: '组件渲染与编译优化' }, { id: 'vue-ecosystem', title: 'Composition API 与生态' }, { id: 'vapor-mode', title: 'Vue 3.6 Vapor Mode' }, { id: 'vue-reactivity-debug', title: 'Vue 响应式故障诊断' }
@@ -57,7 +57,7 @@ export const chapters: Chapter[] = [
     { id: 'build-tools', title: '构建工具与依赖图' }, { id: 'monorepo', title: '包管理与 Monorepo' }, { id: 'delivery', title: 'CI/CD 与质量门禁' }, { id: 'build-regression', title: '构建性能回归治理' }
   ]},
   { id: '12', route: '/guide/12-performance', title: 'Web 性能、Core Web Vitals 与监控', shortTitle: '性能与监控', difficulty: 5, frequency: '极高', levels: allLevels, tags: ['CWV', 'RUM', 'Profiling'], updatedAt: '2026-07-31', topics: [
-    { id: 'core-web-vitals', title: 'LCP、INP 与 CLS' }, { id: 'performance-strategy', title: '加载与运行时优化' }, { id: 'observability', title: 'RUM、告警与归因' }, { id: 'monitoring-sdk', title: '监控 SDK 与数据管线' }
+    { id: 'core-web-vitals', title: 'LCP、INP 与 CLS' }, { id: 'performance-strategy', title: '加载与运行时优化' }, { id: 'vitals-lifecycle', title: '指标采集与页面生命周期' }, { id: 'observability', title: 'RUM、告警与归因' }, { id: 'monitoring-sdk', title: '监控 SDK 与数据管线' }
   ]},
   { id: '13', route: '/guide/13-security', title: 'Web、安全供应链、权限与隐私', shortTitle: '前端安全', difficulty: 5, frequency: '极高', levels: allLevels, tags: ['XSS', 'CSRF', 'CSP'], updatedAt: '2026-07-31', topics: [
     { id: 'xss-csp', title: 'XSS、CSP 与 Trusted Types' }, { id: 'csrf-auth', title: 'CSRF、Cookie 与鉴权' }, { id: 'supply-chain', title: '供应链与隐私安全' }, { id: 'security-incident', title: '安全事件响应' }
@@ -66,13 +66,13 @@ export const chapters: Chapter[] = [
     { id: 'test-pyramid', title: '测试分层与边界' }, { id: 'component-test', title: '组件与集成测试' }, { id: 'e2e-quality', title: 'E2E、契约与稳定性' }, { id: 'flaky-tests', title: 'Flaky 测试治理' }
   ]},
   { id: '15', route: '/guide/15-algorithms-handwrite', title: '数据结构、算法与前端手写题', shortTitle: '算法与手写', difficulty: 4, frequency: '极高', levels: allLevels, tags: ['Algorithm', 'Promise', 'LRU'], updatedAt: '2026-07-31', topics: [
-    { id: 'complexity', title: '复杂度与常用结构' }, { id: 'handwrite', title: '防抖、并发与深拷贝' }, { id: 'frontend-algorithms', title: '前端算法解题策略' }, { id: 'concurrency-runner', title: '并发任务调度器' }
+    { id: 'complexity', title: '复杂度与常用结构' }, { id: 'handwrite', title: '防抖、并发与深拷贝' }, { id: 'frontend-algorithms', title: '前端算法解题策略' }, { id: 'concurrency-runner', title: '并发任务调度器' }, { id: 'request-batching', title: '请求合并与背压' }
   ]},
   { id: '16', route: '/guide/16-cross-platform', title: '小程序、Hybrid 与跨端开发', shortTitle: '跨端开发', difficulty: 4, frequency: '高', levels: ['初级', '中级', '高级'], tags: ['Mini Program', 'React Native', 'Electron'], updatedAt: '2026-07-31', topics: [
     { id: 'mini-program', title: '小程序运行模型' }, { id: 'hybrid-native', title: 'Hybrid 与 React Native' }, { id: 'cross-platform-choice', title: '跨端方案选型' }, { id: 'bridge-governance', title: 'Bridge 协议治理' }
   ]},
   { id: '17', route: '/guide/17-ai-frontend', title: 'AI 前端、Agent、流式交互与 MCP', shortTitle: 'AI 与前端', difficulty: 5, frequency: '高', levels: ['初级', '中级', '高级'], tags: ['LLM', 'Agent', 'MCP'], updatedAt: '2026-07-31', topics: [
-    { id: 'streaming-ui', title: '流式 UI 与生成式界面' }, { id: 'agent-tooling', title: 'Agent 与工具调用' }, { id: 'mcp', title: 'MCP 与安全边界' }, { id: 'agent-evaluation', title: 'Agent 评测与可观测性' }
+    { id: 'streaming-ui', title: '流式 UI 与生成式界面' }, { id: 'agent-tooling', title: 'Agent 与工具调用' }, { id: 'tool-reliability', title: '工具失败与循环治理' }, { id: 'mcp', title: 'MCP 与安全边界' }, { id: 'agent-evaluation', title: 'Agent 评测与可观测性' }
   ]},
   { id: '18', route: '/guide/18-system-design', title: '大厂场景题、系统设计与项目复盘', shortTitle: '系统设计与复盘', difficulty: 5, frequency: '极高', levels: allLevels, tags: ['System Design', 'Scenario', 'STAR'], updatedAt: '2026-07-31', topics: [
     { id: 'frontend-system-design', title: '前端系统设计方法' }, { id: 'scenario-debugging', title: '场景排障与技术决策' }, { id: 'project-review', title: '项目复盘与行为面试' }, { id: 'traffic-spike-design', title: '大促峰值系统设计' }

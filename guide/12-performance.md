@@ -17,8 +17,9 @@ updatedAt: 2026-07-31
 
 1. [LCP、INP、CLS 分别衡量什么？](#core-web-vitals)
 2. [如何系统优化页面性能？](#performance-strategy)
-3. [如何建设可归因的 RUM？](#observability)
-4. [前端监控 SDK 与数据管线如何设计？](#monitoring-sdk)
+3. [如何正确采集一整个页面访问期的指标？](#vitals-lifecycle)
+4. [如何建设可归因的 RUM？](#observability)
+5. [前端监控 SDK 与数据管线如何设计？](#monitoring-sdk)
 
 ## LCP、INP、CLS 分别衡量什么？ {#core-web-vitals}
 
@@ -43,6 +44,29 @@ new PerformanceObserver((list) => {
   }
 }).observe({ type: 'long-animation-frame', buffered: true })
 ```
+
+## 如何正确采集一整个页面访问期的指标？ {#vitals-lifecycle}
+
+<InterviewMeta :difficulty="5" frequency="高" levels="初级 / 中级 / 高级" verified="2026-07-31" />
+
+**一句话结论：** Core Web Vitals 是页面访问期内不断修正的会话级结果，采集端要处理 buffered entries、可见性变化、bfcache 恢复和可靠上报，不能看到第一条 entry 就当最终值。
+
+- LCP 候选会随更大内容出现而更新；CLS 要按 session window 聚合，而不是把所有 `layout-shift` 简单累加；INP 从访问期交互中选择代表性的高延迟值。
+- `PerformanceObserver` 应使用 `{ buffered: true }` 接收观察器创建前已有的记录，并先检查 `PerformanceObserver.supportedEntryTypes` 做能力降级。
+- 页面进入后台时可发送一次阶段值；用 `visibilitychange` 和 `pagehide`，不要依赖可能不触发且妨碍 bfcache 的 `unload`/`beforeunload`。
+- bfcache 恢复会形成新的指标导航段。生产项目优先使用 `web-vitals` 库处理指标算法和浏览器差异，自写观察器更适合学习底层 entry 与补充诊断维度。
+
+```js
+addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'hidden') flushMetrics()
+})
+addEventListener('pagehide', flushMetrics)
+addEventListener('pageshow', (event) => {
+  if (event.persisted) startRestoredPageView()
+})
+```
+
+**工程场景：** 每条指标携带 metric ID、navigation type、route、release 与采样率。允许同一 ID 多次上报阶段值，服务端按 ID 去重并保留最新值，避免“提前上报”和“重复计算”同时发生。
 
 ## 如何建设可归因的 RUM？ {#observability}
 
@@ -90,6 +114,7 @@ addEventListener('visibilitychange', () => {
 ## 权威来源 {#sources}
 
 - [web.dev: Web Vitals](https://web.dev/articles/vitals)（核验：2026-07-31）
+- [web.dev: web-vitals library](https://github.com/GoogleChrome/web-vitals)（核验：2026-07-31）
 - [Chrome: INP](https://web.dev/articles/inp)（核验：2026-07-31）
 - [W3C Performance Timeline](https://w3c.github.io/performance-timeline/)（核验：2026-07-31）
 - [web.dev: Core Web Vitals workflows](https://web.dev/articles/vitals-tools)（核验：2026-07-31）
