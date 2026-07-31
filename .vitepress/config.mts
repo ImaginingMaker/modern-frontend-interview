@@ -2,6 +2,7 @@ import { defineConfig } from 'vitepress'
 import { chapters, createSidebar } from '../content/catalog'
 
 export default defineConfig({
+  base: process.env.GITHUB_ACTIONS ? '/modern-frontend-interview/' : '/',
   title: 'Modern Frontend Interview',
   description: '覆盖校招到高级岗位的现代前端面试系统讲义',
   lang: 'zh-CN',
