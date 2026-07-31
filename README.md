@@ -105,7 +105,7 @@ docs/                     内容规范与来源说明
 
 ## 贡献
 
-提交前运行 `npm run check`，并阅读[贡献指南](./CONTRIBUTING.md)。
+提交前运行 `npm run check`，并阅读[贡献指南](./contributing.md)。
 
 ## License
 

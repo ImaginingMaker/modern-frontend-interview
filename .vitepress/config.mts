@@ -19,6 +19,9 @@ export default defineConfig({
       { text: '全部章节', items: chapters.map((chapter) => ({ text: `${chapter.id}. ${chapter.shortTitle}`, link: chapter.route })) },
       { text: '参与贡献', link: '/contributing' }
     ],
+    socialLinks: [
+      { icon: 'github', link: 'https://github.com/ImaginingMaker/modern-frontend-interview' }
+    ],
     sidebar: {
       '/guide/': [{ text: '现代前端面试体系', items: createSidebar() }]
     },
