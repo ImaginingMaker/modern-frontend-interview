@@ -1,0 +1,28 @@
+{
+  "name": "modern-frontend-interview",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "面向 2026 大厂面试的现代前端系统讲义",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "docs:dev": "vitepress dev --host 127.0.0.1",
+    "docs:build": "vitepress build",
+    "docs:preview": "vitepress preview --host 127.0.0.1",
+    "test": "vitest run",
+    "test:content": "vitest run tests/content.test.ts tests/catalog.test.ts",
+    "test:e2e": "playwright test",
+    "check:links": "tsx scripts/check-links.ts",
+    "check": "npm run test:content && npm run check:links && npm run docs:build && npm run test:e2e"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.55.0",
+    "@types/node": "^22.15.0",
+    "tsx": "^4.20.0",
+    "typescript": "^5.9.2",
+    "vitepress": "^1.6.4",
+    "vitest": "^3.2.4"
+  }
+}
